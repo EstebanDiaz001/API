@@ -3,9 +3,7 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const cors = require("cors");
 // RUTAS
-const loginRoutes = require("../src/routes/login");
-const registroRoutes = require("../src/routes/registro");
-const consultas = require("../src/routes/consultas")
+const userRoutes = require("../src/routes/user");
 
 
 class Server {
@@ -29,9 +27,7 @@ class Server {
         });
 
         // RUTAS A USAR
-        this.app.use("/api", consultas);
-        this.app.use("/api", loginRoutes);
-        this.app.use("/api", registroRoutes);
+        this.app.use("/api", userRoutes);
 
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {

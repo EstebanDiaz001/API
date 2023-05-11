@@ -23,7 +23,7 @@ const insertUser = async (req = request, res = response) => {
     if (userWithUsername) res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
     if (userWithEmail) res.status(400).json({ message: 'El correo electrónico ya está en uso' });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
@@ -32,13 +32,29 @@ const insertUser = async (req = request, res = response) => {
   }
 };
 
-const updateUser = async (req = request, res = response) => {
-  
+const updateUserPassword = async (req = request, res = response) => {
+
+  let { email, password , newPassword} = req.body;
+
+
+  const user = await User.findOne({ email })
+  res.send({user})
+  // const passwordConcordance = bcrypt.compareSync(password, user.password)
+
+  // if (passwordConcordance) {
+  //   User.findOneAndUpdate()
+  //   res.status(200).json({ message: passwordConcordance, user: user })
+  // } else {
+  //   res.status(400).json({ error: 'Las Contraseñas no coinciden' })
+
+  // }
+
+
 }
 
 
 
 module.exports = {
   insertUser,
-  updateUser
+  updateUserPassword
 }
