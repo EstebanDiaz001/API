@@ -1,18 +1,18 @@
 const express = require("express");
+const { insertUser } = require("../../controllers/user.controller");
 const router = express.Router();
-const { insertarRegstros, insertarCategorias } = require("../../controllers/registro.controller");
-const esquemaCategoria = require("../../database/schema/esquemaCategoria");
 
 
 
 // RUTAS DE LOS REGISTROS
 
-//CREACION DE LOS REGISTROS EN LA BASE DE DATOS
-router.post('/registro', insertarRegstros);
+////CREACION DE LOS REGISTROS EN LA BASE DE DATOS
+//router.post('/registro', insertarRegstros);
+//
+//// USADO PARA INSERTAR POR MEDIO DE UN ENDPOINT UNA CATEGORIA NUEVA
+//router.post(`/registroCategoria`, insertarCategorias)
 
-// USADO PARA INSERTAR POR MEDIO DE UN ENDPOINT UNA CATEGORIA NUEVA
-router.post(`/registroCategoria`, insertarCategorias)
-
+router.put('/userRegister',insertUser);
 
 
 module.exports = router;
