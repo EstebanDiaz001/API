@@ -11,6 +11,7 @@ const insertUser = async (req = request, res = response) => {
   const { username, email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword) {
+    console.log("Las contraseñas no coinciden");
     return res.status(400).json({ message: 'Las contraseñas no coinciden' });
   }
 
@@ -19,9 +20,8 @@ const insertUser = async (req = request, res = response) => {
     const userWithUsername = await User.findOne({ username });
     const userWithEmail = await User.findOne({ email });
 
-    if (userWithUsername || userWithEmail) {
-      return res.status(400).json({ message: 'El nombre de usuario o correo electrónico ya está en uso' });
-    }
+    if (userWithUsername) res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
+    if (userWithEmail) res.status(400).json({ message: 'El correo electrónico ya está en uso' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
