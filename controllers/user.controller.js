@@ -33,7 +33,7 @@ const insertUser = async (req = request, res = response) => {
 
 const updateUserPassword = async (req = request, res = response) => {
 
-  let { email, password, newPassword } =await req.body;
+  let { email, password, newPassword } = await req.body;
 
 
   const user = await User.findOne({ email })
