@@ -33,7 +33,7 @@ const insertUser = async (req = request, res = response) => {
 
 const updateUserPassword = async (req = request, res = response) => {
 
-  let { email, password, newPassword } = await req.body;
+  const { email, password, newPassword } = await req.body;
 
 
   const user = await User.findOne({ email })
@@ -43,7 +43,7 @@ const updateUserPassword = async (req = request, res = response) => {
 
 
   if (passwordConcordance) {
-    await User.findOneAndUpdate({email}, {username:"aksjdhkjashd"})
+    await User.findOneAndUpdate({email}, {password:newPasswordHashed})
     res.status(200).json({ message: passwordConcordance, user: user })
   } else {
     res.status(400).json({ error: 'Las Contraseñas no coinciden' })
