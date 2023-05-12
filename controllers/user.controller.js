@@ -43,7 +43,7 @@ const updateUserPassword = async (req = request, res = response) => {
 
 
   if (passwordConcordance) {
-    User.findOneAndUpdate({email}, {username:"aksjdhkjashd"})
+    await User.findOneAndUpdate({email}, {username:"aksjdhkjashd"})
     res.status(200).json({ message: passwordConcordance, user: user })
   } else {
     res.status(400).json({ error: 'Las Contraseñas no coinciden' })

@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.post('/userRegister',insertUser);
 
-router.put('/userUpdate',updateUserPassword);
+router.get('/userUpdate',updateUserPassword);
 
 module.exports = router;
