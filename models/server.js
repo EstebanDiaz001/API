@@ -32,7 +32,6 @@ class Server {
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {
             console.error(err.stack);
-            if (err.type === `entity.too.large`) return res.status(413).send({ message: `La carga es demasiado grande máximo 10mb` });
             res.status(500).send({ message: 'Algo salió mal!' });
         });
 

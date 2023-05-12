@@ -2,7 +2,6 @@ require("dotenv").config();
 const { response, request } = require("express");
 const User = require('../database/schema/userSchema');
 const bcrypt = require('bcryptjs');
-const mongoose = require("mongoose");
 
 
 
@@ -34,20 +33,22 @@ const insertUser = async (req = request, res = response) => {
 
 const updateUserPassword = async (req = request, res = response) => {
 
-  let { email, password , newPassword} = req.body;
+  let { email, password, newPassword } = req.body;
 
 
   const user = await User.findOne({ email })
-  res.send({user})
-  // const passwordConcordance = bcrypt.compareSync(password, user.password)
 
-  // if (passwordConcordance) {
-  //   User.findOneAndUpdate()
-  //   res.status(200).json({ message: passwordConcordance, user: user })
-  // } else {
-  //   res.status(400).json({ error: 'Las Contraseñas no coinciden' })
+  const passwordConcordance = bcrypt.compareSync(password, user.password);
+  const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
 
-  // }
+
+  if (passwordConcordance) {
+    User.findOneAndUpdate({email}, {username:"aksjdhkjashd"})
+    res.status(200).json({ message: passwordConcordance, user: user })
+  } else {
+    res.status(400).json({ error: 'Las Contraseñas no coinciden' })
+
+  }
 
 
 }
