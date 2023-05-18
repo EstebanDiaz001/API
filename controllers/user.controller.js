@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { response, request } = require("express");
+
 const User = require('../database/schemas/userSchema');
 const bcrypt = require('bcryptjs');
 
@@ -19,6 +20,7 @@ const insertUser = async (req = request, res = response) => {
     // Verificar si ya existe un usuario con el mismo username o email
     const userWithUsername = await User.findOne({ names });
     
+    
     if (userWithUsername) return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -27,30 +29,34 @@ const insertUser = async (req = request, res = response) => {
     return res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
   } catch (error) {
     return res.status(400).json({ message: 'Error al crear el usuario', error });
+    
   }
 };
 
-const updateUserPassword = async (req = request, res = response) => {
+const updateUser = async (req = request, res = response) => {
 
-  const { email, password, newPassword, newPasswordConfirm } = await req.body;
+  const { id } = req.params
+  const { email, password, newPassword, newPasswordConfirm } = req.body;
 
   // if (!req.body.email || !req.body.password || req.body.newPasswordConfirm || req.body.newPassword) return res.status(400).json({ message: 'Hay campos sin llenar' });
 
 
   
-  const user = await User.findOne({ email })
-  return res.status(400).json({ message: user});
+  const user = await User.findById(id)
+  return res.status(400).json({ user});
 
-  // const passwordConcordance = bcrypt.compareSync(password, user.password);
-  // const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
+  /* AQUI VA EL RESTO DEL CODIGO
+// const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
 
 
-  // if (passwordConcordance) {
-  //   await User.findOneAndUpdate({ email }, { password: newPasswordHashed })
-  //   return res.status(200).json({ message: passwordConcordance, user: user })
-  // } else {
-  //   return res.status(400).json({ error: 'Las Contraseñas no coinciden' })
-  // }
+// if (passwordConcordance) {
+//   await User.findOneAndUpdate({ email }, { password: newPasswordHashed })
+//   return res.status(200).json({ message: passwordConcordance, user: user })
+// } else {
+//   return res.status(400).json({ error: 'Las Contraseñas no coinciden' })
+// }
+// const passwordConcordance = bcrypt.compareSync(password, user.password);
+*/
 
   
 
@@ -60,5 +66,5 @@ const updateUserPassword = async (req = request, res = response) => {
 
 module.exports = {
   insertUser,
-  updateUserPassword
+  updateUser
 }

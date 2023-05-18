@@ -38,21 +38,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'La contraseña es obligatoria'],
-    validate: {
-      validator: function (value) {
-        const options = {
-          minLength: 8,
-          minLowercase: 1,
-          minUppercase: 1,
-          minNumbers: 1,
-          minSymbols: 0,
-          returnScore: false
-        };
-
-        return validator.isStrongPassword(value, options);
-      },
-      message: 'La contraseña no cumple los criterios de fortaleza.'
-    }
   },
   img:{
     type: String,
