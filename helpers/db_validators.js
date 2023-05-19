@@ -16,7 +16,12 @@ const emailExiste = async (email) => {
     const userWithEmail = await User.findOne({ email });
     if (userWithEmail) throw new Error(`El correo electrónico ${email} ya está en uso`)
 }
+const namesExiste = async (names) => {
 
+    const userWithNames = await User.findOne({names})
+    if (userWithNames) throw new Error(`El nombre ${names} ya existe en la base de datos`)
+
+}
 const isStrongPassword = async (password) => {
     
     const options = {
@@ -51,4 +56,5 @@ module.exports = {
     emailExiste,
     isStrongPassword,
     existeUsuarioPorId,
+    namesExiste,
 }

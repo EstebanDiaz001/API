@@ -19,9 +19,6 @@ const insertUser = async (req = request, res = response) => {
   try {
     // Verificar si ya existe un usuario con el mismo username o email
     const userWithUsername = await User.findOne({ names });
-    
-    
-    if (userWithUsername) return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
 
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = new User({ names, lastName, secondLastName, phoneNumber, email, password: hashedPassword,  });
