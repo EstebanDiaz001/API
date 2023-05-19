@@ -5,7 +5,7 @@ require("dotenv").config();
 // AUTENTICACIÓN DE LAS CREDENCIALES
 const loginAuth = (req = request, res = response) => {
 
-    // TODO Aqui va el login 
+    
     
 }
 

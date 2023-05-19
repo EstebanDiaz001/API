@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require('path');
 // RUTAS
 const userRoutes = require("../src/routes/userRoutes");
+const loginRoutes = require("../src/routes/loginRoutes");
 require('dotenv').config()
 
 
@@ -35,6 +36,7 @@ class Server {
 
         // RUTAS A USAR
         this.app.use("/api/user", userRoutes);
+        this.app.use("/api/auth", userRoutes);
 
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {
