@@ -1,8 +1,8 @@
 const { check } = require("express-validator");
 const { 
     namesExiste,
-    emailExiste,
     existeUsuarioPorId,
+    emailExiste,
     isStrongPassword,
     emailNoExiste,
     numeroDeTelefonoExiste} = require("../helpers/db_validators");
@@ -19,13 +19,13 @@ const insertUserChecks = [
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
     check('phoneNumber').custom(numeroDeTelefonoExiste),
-    //check('names').custom(namesExiste),
+    //check('names').custom(namesExiste) // VALIDACIÓN QUE SE GANÓ EL ODIO
 ]
 
 const updateUserCkecks = [
-    // check('id', 'No es un id valido').isMongoId(),
+    // check('id', 'No es un id valido').isMongoId(),   DEPRECADAS DE MOMENTO
+    // check('user').custom(existeUsuarioPorId),        DEPRECADAS DE MOMENTO
     validarJWT,
-    // check('user').custom(existeUsuarioPorId),
 ]
 
 const loginAuthChecks = [

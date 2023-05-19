@@ -41,7 +41,7 @@ class Server {
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {
             console.error(err.stack);
-            res.status(500).json({ message: 'Algo salió mal!' });
+            res.status(500).json({ message: 'Llama al backend y dile que hay algo mal' });
         });
 
 
