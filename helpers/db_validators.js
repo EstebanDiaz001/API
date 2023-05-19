@@ -56,7 +56,10 @@ const isStrongPassword = async (password) => {
 }
 // VALIDACIONES AL ACTUALIZAR UN REGISTRO
 
-const existeUsuarioPorId = async (id) => {
+const existeUsuarioPorId = async (user) => {
+
+    const id = user._id
+    console.log(user);
 
     const userById = await User.findById(id);
 

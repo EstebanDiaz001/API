@@ -17,8 +17,7 @@ const insertUser = async (req = request, res = response) => {
   }
   
   try {
-    // Verificar si ya existe un usuario con el mismo username o email
-    const userWithUsername = await User.findOne({ names });
+    
 
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = new User({ names, lastName, secondLastName, phoneNumber, email, password: hashedPassword,  });
@@ -32,15 +31,13 @@ const insertUser = async (req = request, res = response) => {
 
 const updateUser = async (req = request, res = response) => {
 
-  const { id } = req.params
+  const usuarioAutenticado = req.body.user
   const { email, password, newPassword, newPasswordConfirm } = req.body;
 
-  // if (!req.body.email || !req.body.password || req.body.newPasswordConfirm || req.body.newPassword) return res.status(400).json({ message: 'Hay campos sin llenar' });
 
 
   
-  const user = await User.findById(id)
-  return res.status(400).json({ user});
+  return res.status(400).json({ usuarioAutenticado });
 
   /* AQUI VA EL RESTO DEL CODIGO
 // const newPasswordHashed = bcrypt.hashSync(newPassword, 10);

@@ -6,6 +6,7 @@ const {
     isStrongPassword,
     emailNoExiste,
     numeroDeTelefonoExiste} = require("../helpers/db_validators");
+const validarJWT = require("./validar_jwt");
 
 
 
@@ -22,12 +23,13 @@ const insertUserChecks = [
 ]
 
 const updateUserCkecks = [
-    check('id', 'No es un id valido').isMongoId(),
-    check('id').custom(existeUsuarioPorId),
+    // check('id', 'No es un id valido').isMongoId(),
+    validarJWT,
+    // check('user').custom(existeUsuarioPorId),
 ]
 
 const loginAuthChecks = [
-    check('password').not().isEmpty(),
+    check('password', 'La contraseña es obligatoria').not().isEmpty(),
     check('email', 'El correo no es un correo válido').isEmail(),
     check('email').custom(emailNoExiste),
 

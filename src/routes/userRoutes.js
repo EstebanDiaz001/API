@@ -18,6 +18,6 @@ const router = express.Router();
 // REGISTRAR NUEVOS USUARIO
 router.post('/userRegister', [insertUserChecks,validarChecks] ,insertUser);
 // ACUALIZAR USUARIO
-router.put('/userUpdate/:id', [updateUserCkecks,validarChecks],updateUser);
+router.put('/userUpdate', [updateUserCkecks,validarChecks],updateUser);
 
 module.exports = router;
