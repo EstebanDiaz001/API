@@ -3,7 +3,9 @@ const {
     namesExiste,
     emailExiste,
     existeUsuarioPorId,
-    isStrongPassword} = require("../helpers/db_validators");
+    isStrongPassword,
+    emailNoExiste,
+    numeroDeTelefonoExiste} = require("../helpers/db_validators");
 
 
 
@@ -15,6 +17,7 @@ const insertUserChecks = [
     check('phoneNumber', "El numero no es de colombia").isMobilePhone('es-CO'),
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
+    check('phoneNumber').custom(numeroDeTelefonoExiste),
     //check('names').custom(namesExiste),
 ]
 
@@ -25,8 +28,8 @@ const updateUserCkecks = [
 
 const loginAuthChecks = [
     check('password').not().isEmpty(),
-    check('email').isEmail(),
-    check('email').not().custom(emailExiste),
+    check('email', 'El correo no es un correo válido').isEmail(),
+    check('email').custom(emailNoExiste),
 
 ]
 

@@ -16,10 +16,22 @@ const emailExiste = async (email) => {
     const userWithEmail = await User.findOne({ email });
     if (userWithEmail) throw new Error(`El correo electrónico ${email} ya está en uso`)
 }
+
+const emailNoExiste = async (email) => {
+
+    const userWithEmail = await User.findOne({ email });
+    if (!userWithEmail) throw new Error(`El correo electrónico ${email} no está registrado en la base de datos`)
+}
 const namesExiste = async (names) => {
 
     const userWithNames = await User.findOne({names})
     if (userWithNames) throw new Error(`El nombre ${names} ya existe en la base de datos`)
+
+}
+const numeroDeTelefonoExiste = async (phoneNumber) => {
+
+    const userWithPhone = await User.findOne({phoneNumber})
+    if (userWithPhone) throw new Error(`El nombre ${phoneNumber} ya existe en la base de datos`)
 
 }
 const isStrongPassword = async (password) => {
@@ -31,6 +43,8 @@ const isStrongPassword = async (password) => {
       minNumbers: 1,
       minSymbols: 1,
     };
+
+    const a = JSON.stringify(options)
 
     const strong = validator.isStrongPassword(password, options);
     if( !strong ) throw new Error(`La contraseña no cumple los criterios de fortaleza ( Míninmo 8 caracteres, Una Mayúscula, Una Minúscula, Un Número, Un Símbolo  ).`
@@ -54,7 +68,9 @@ const existeUsuarioPorId = async (id) => {
 module.exports = {
     esRolValido,
     emailExiste,
+    emailNoExiste,
     isStrongPassword,
     existeUsuarioPorId,
     namesExiste,
+    numeroDeTelefonoExiste
 }
