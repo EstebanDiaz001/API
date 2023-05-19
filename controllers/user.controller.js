@@ -23,9 +23,9 @@ const insertUser = async (req = request, res = response) => {
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = new User({ names, lastName, secondLastName, phoneNumber, email, password: hashedPassword,  });
     await newUser.save();
-    return res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
+    return res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser, success: true });
   } catch (error) {
-    return res.status(400).json({ message: 'Error al crear el usuario', error });
+    return res.status(400).json({ message: 'Error al crear el usuario', error, success: false });
     
   }
 };
