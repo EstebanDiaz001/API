@@ -15,14 +15,18 @@ const validarJWT = async (req = request, res = response, next)=>{
     try {
 
         const {_id} = jwt.verify(token, process.env.SECRETORPUBLICKEY)
-        req.body.user = await User.findById(_id)
+        const user = await User.findById(_id)
+        
+        if (!user) return res.status(401).json({msg:'Token no válido: El usuario no existe en la DB'})
 
+
+        req.body.user = user
         next()
     } catch (error) {
         console.log(error);
         res.status(401).json({msg:'Token no valido'})
     }
-
+    
 
 }
 
