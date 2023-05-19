@@ -15,12 +15,14 @@ const insertUserChecks = [
     check('phoneNumber').isMobilePhone('es-CO'),
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
-    check('names').custom(namesExiste),
+    //check('names').custom(namesExiste),
 ]
 const validarErrores = (req , res , next) =>{
     const errors = validationResult(req);
+    console.log(errors); 
+
     if (!errors.isEmpty()) {
-        return res.status(400).json(errors)
+        return res.status(400).json({errors, success:false})
 
 /* 
 

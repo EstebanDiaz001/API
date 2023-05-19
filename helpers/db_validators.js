@@ -30,11 +30,12 @@ const isStrongPassword = async (password) => {
       minUppercase: 1,
       minNumbers: 1,
       minSymbols: 1,
-      returnScore: false
     };
 
     const strong = validator.isStrongPassword(password, options);
-    if( !strong ) throw new Error('La contraseña no cumple los criterios de fortaleza.')
+    if( !strong ) throw new Error(`La contraseña no cumple los criterios de fortaleza \n
+    ( Míninmo 8 caracteres, Una Mayúscula, Una Minúscula, Un Número, Un Símbolo  ).`
+    )
     
 
 
