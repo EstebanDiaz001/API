@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Home</title>
-    <link rel="stylesheet" href="css/index.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Bienvenido</h1>
-        <p>Esta es la página principal.</p>
+      <h1>Bienvenido</h1>
+      <p>Esta es la página principal.</p>
+      <hr />
+      <div
+        id="g_id_onload"
+        data-client_id="57043907615-ag54t6skvbv7vht7inp0moaqqn5oc3n4.apps.googleusercontent.com"
+        data-auto_prompt="false"
+        data-callback="handleCredentialResponse"
+      ></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+      ></div>
     </div>
-</body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+           
+            // GOOGLE TOKEN : ID_TOKEN
+            console.log('ID_TOKEN:',response.credential);
+      
+        }
+      </script>
+  </body>
 </html>
