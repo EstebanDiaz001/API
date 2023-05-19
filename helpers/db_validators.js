@@ -31,7 +31,7 @@ const namesExiste = async (names) => {
 const numeroDeTelefonoExiste = async (phoneNumber) => {
 
     const userWithPhone = await User.findOne({phoneNumber})
-    if (userWithPhone) throw new Error(`El nombre ${phoneNumber} ya existe en la base de datos`)
+    if (userWithPhone) throw new Error(`El numero ${phoneNumber} ya existe en la base de datos`)
 
 }
 const isStrongPassword = async (password) => {
