@@ -36,7 +36,7 @@ class Server {
 
         // RUTAS A USAR
         this.app.use("/api/user", userRoutes);
-        this.app.use("/api/auth", userRoutes);
+        this.app.use("/api/auth", loginRoutes);
 
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {
