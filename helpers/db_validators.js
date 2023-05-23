@@ -74,9 +74,12 @@ const typeDNI = async (type) => {
        if (!options.includes(type)) {
         throw new Error('No es un tipo de documento valido')
        }
-            
+}
 
-
+const existeDNI = async (DNI) =>{
+    
+    const userByDNI = await User.findOne({DNI})
+    if (userByDNI) throw new Error('Ya existe un usuario con este DNI')
 }
 
 // VALIDACIONES AL ACTUALIZAR UN REGISTRO
@@ -102,5 +105,6 @@ module.exports = {
     namesExiste,
     numeroDeTelefonoExiste,
     isCoDNI,
-    typeDNI
+    typeDNI,
+    existeDNI
 }

@@ -5,7 +5,8 @@ const {
     emailNoExiste,
     numeroDeTelefonoExiste,
     isCoDNI,
-    typeDNI} = require("../helpers/db_validators");
+    typeDNI,
+    existeDNI} = require("../helpers/db_validators");
 const validarJWT = require("./validar_jwt");
 
 
@@ -18,6 +19,7 @@ const insertUserChecks = [
     check('phoneNumber', "El numero no es de colombia").isMobilePhone('es-CO'),
     check('typeDNI').custom(typeDNI),
     check('DNI').custom(isCoDNI),
+    check('DNI').custom(existeDNI),
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
     check('phoneNumber').custom(numeroDeTelefonoExiste),
