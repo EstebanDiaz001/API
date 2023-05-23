@@ -66,11 +66,7 @@ const isCoDNI = async (DNI) => {
 
 const typeDNI = async (type) => {
 
-    const options = [
-        'CC',
-        'TI',
-        'CC'
-    ]
+    const options = ['CC','TI']
        if (!options.includes(type)) {
         throw new Error('No es un tipo de documento valido')
        }

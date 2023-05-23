@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
   typeDNI:{
     type: String,
     required:[true, 'El tipo de DNI es obligatorio'],
-    enum: ['CC','TI','CE']
+    enum: ['CC','TI']
   },
   google:{
     type:Boolean,
