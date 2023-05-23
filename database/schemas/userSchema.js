@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema({
       message: 'El número de teléfono no es válido.'
     }
   },
+  DNI: {
+    type: String,
+    required: [true,'El DNI es obligatorio'],
+    validate: {
+      validator: function (value) {
+        return validator.matches(value, /^\d{10}$/ );
+      },
+      message: 'El número de DNI no es válido.'
+    }
+  },
   email: {
     type: String,
     required: [true, 'El email es obligatorio'],
@@ -47,6 +57,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default:'USER_ROLE',
     enum: ['ADMIN_ROLE', 'USER_ROLE']
+  },
+  typeDNI:{
+    type: String,
+    required:[true, 'El tipo de DNI es obligatorio'],
+    enum: ['CC','TI','CE']
   },
   google:{
     type:Boolean,

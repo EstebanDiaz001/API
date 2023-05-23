@@ -1,3 +1,4 @@
+const { request, response } = require("express");
 const Rol = require("../database/schemas/rolSchema");
 const User = require("../database/schemas/userSchema");
 const validator = require('validator');
@@ -54,6 +55,30 @@ const isStrongPassword = async (password) => {
 
 
 }
+
+const isCoDNI = async (DNI) => {
+    const cedulaSinPuntos = DNI.replace(/\./g, '');
+
+    if (!/^\d{10}$/.test(cedulaSinPuntos)) {
+      throw new Error('La cédula debe contener 10 dígitos');
+    }
+}
+
+const typeDNI = async (type) => {
+
+    const options = [
+        'CC',
+        'TI',
+        'CC'
+    ]
+       if (!options.includes(type)) {
+        throw new Error('No es un tipo de documento valido')
+       }
+            
+
+
+}
+
 // VALIDACIONES AL ACTUALIZAR UN REGISTRO
 
 const existeUsuarioPorId = async (user) => {
@@ -75,5 +100,7 @@ module.exports = {
     isStrongPassword,
     existeUsuarioPorId,
     namesExiste,
-    numeroDeTelefonoExiste
+    numeroDeTelefonoExiste,
+    isCoDNI,
+    typeDNI
 }

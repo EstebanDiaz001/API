@@ -1,11 +1,11 @@
 const { check } = require("express-validator");
 const { 
-    namesExiste,
-    existeUsuarioPorId,
     emailExiste,
     isStrongPassword,
     emailNoExiste,
-    numeroDeTelefonoExiste} = require("../helpers/db_validators");
+    numeroDeTelefonoExiste,
+    isCoDNI,
+    typeDNI} = require("../helpers/db_validators");
 const validarJWT = require("./validar_jwt");
 
 
@@ -16,6 +16,8 @@ const insertUserChecks = [
     check('lastName', 'El apellido es obligatorio').not().isEmpty(),
     check('email', 'El correo no es un correo válido').isEmail(),
     check('phoneNumber', "El numero no es de colombia").isMobilePhone('es-CO'),
+    check('typeDNI').custom(typeDNI),
+    check('DNI').custom(isCoDNI),
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
     check('phoneNumber').custom(numeroDeTelefonoExiste),

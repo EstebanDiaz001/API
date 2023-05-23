@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 
 
 const insertUser = async (req = request, res = response) => {
-  const { names, lastName, secondLastName, email, password, confirmPassword, phoneNumber } = req.body;
+  const { names, lastName, secondLastName, typeDNI, DNI, email, password, confirmPassword, phoneNumber } = req.body;
 
   
   if (password !== confirmPassword) {
