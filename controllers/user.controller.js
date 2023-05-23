@@ -3,6 +3,7 @@ const { response, request } = require("express");
 
 const User = require('../database/schemas/userSchema');
 const bcrypt = require('bcryptjs');
+const { validarDNI } = require("../helpers/validar_dni");
 
 
 
@@ -10,10 +11,21 @@ const bcrypt = require('bcryptjs');
 const insertUser = async (req = request, res = response) => {
   const { names, lastName, secondLastName, typeDNI, DNI, email, password, confirmPassword, phoneNumber } = req.body;
 
+  const checkDNI = validarDNI(typeDNI, DNI)
+  if (!checkDNI) return res.status(400).json({ errors:[{
+    value:DNI,
+    msg:`El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
+    path:'DNI'
+  }] })
+
   
   if (password !== confirmPassword) {
     console.log("Las contraseñas no coinciden");
-    return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+    return res.status(400).json({errors : [{
+      value:'password',
+      msg:`Las contraseñas no coinciden`,
+      path:'password'
+    }]});
   }
   
   try {

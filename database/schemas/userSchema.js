@@ -25,13 +25,8 @@ const userSchema = new mongoose.Schema({
   },
   DNI: {
     type: String,
+    uppercase:true,
     required: [true,'El DNI es obligatorio'],
-    validate: {
-      validator: function (value) {
-        return validator.matches(value, /^\d{10}$/ );
-      },
-      message: 'El número de DNI no es válido.'
-    }
   },
   email: {
     type: String,
@@ -61,7 +56,7 @@ const userSchema = new mongoose.Schema({
   typeDNI:{
     type: String,
     required:[true, 'El tipo de DNI es obligatorio'],
-    enum: ['CC','TI']
+    enum: ['CC','PASAPORTE']
   },
   google:{
     type:Boolean,
