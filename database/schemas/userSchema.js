@@ -13,21 +13,21 @@ const userSchema = new mongoose.Schema({
   secondLastName: {
     type: String,
   },
-  // phoneNumber: {
-  //   type: String,
-  //   required: true,
-  //   validate: {
-  //     validator: function (value) {
-  //       return validator.isMobilePhone(value, 'es-CO');
-  //     },
-  //     message: 'El número de teléfono no es válido.'
-  //   }
-  // },
-  // DNI: {
-  //   type: String,
-  //   uppercase:true,
-  //   required: [true,'El DNI es obligatorio'],
-  // },
+  phoneNumber: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return validator.isMobilePhone(value, 'es-CO');
+      },
+      message: 'El número de teléfono no es válido.'
+    }
+  },
+  DNI: {
+    type: String,
+    uppercase:true,
+    required: [true,'El DNI es obligatorio'],
+  },
   email: {
     type: String,
     required: [true, 'El email es obligatorio'],
@@ -53,11 +53,11 @@ const userSchema = new mongoose.Schema({
     default:'USER_ROLE',
     enum: ['ADMIN_ROLE', 'USER_ROLE']
   },
-  // typeDNI:{
-  //   type: String,
-  //   required:[true, 'El tipo de DNI es obligatorio'],
-  //   enum: ['CC','PASAPORTE']
-  // },
+  typeDNI:{
+    type: String,
+    required:[true, 'El tipo de DNI es obligatorio'],
+    enum: ['CC','PASAPORTE']
+  },
   google:{
     type:Boolean,
     default:false
