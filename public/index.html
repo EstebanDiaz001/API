@@ -35,7 +35,7 @@
     <script>
       function handleCredentialResponse(response) {
         // GOOGLE TOKEN : ID_TOKEN
-        console.log("ID_TOKEN:", response.credential);
+        console.log({"ID_TOKEN:":response.credential});
         const body = {id_token: response.credential}
 
         fetch('http://localhost:9000/api/auth/google', {
@@ -47,6 +47,7 @@
         })
           .then(resp => resp.json())
           .then(resp => {
+            console.log(resp);
             localStorage.setItem('email', resp.usuario.email)
           })
           .catch(console.warn);
