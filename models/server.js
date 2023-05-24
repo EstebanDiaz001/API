@@ -5,6 +5,7 @@ const path = require('path');
 // RUTAS
 const userRoutes = require("../src/routes/userRoutes");
 const loginRoutes = require("../src/routes/loginRoutes");
+const categoriasRoutes = require("../src/routes/categorias");
 require('dotenv').config()
 
 
@@ -29,14 +30,15 @@ class Server {
         this.app.get("/", (req, res) => {
             res.json({ message: `Raiz de la API con puerto: ${this.port}` })
         });
-        this.app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, '..', 'public', '404.html'))
-          })
+        // this.app.get('*', (req, res) => {
+        //     res.sendFile(path.join(__dirname, '..', 'public', '404.html'))
+        //   })
 
 
         // RUTAS A USAR
         this.app.use("/api/user", userRoutes);
         this.app.use("/api/auth", loginRoutes);
+        this.app.use("/api/categorias", categoriasRoutes);
 
         // MANEJO DE LOS ERRORES
         this.app.use(function (err, req, res, next) {

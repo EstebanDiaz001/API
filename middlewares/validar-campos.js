@@ -4,14 +4,13 @@ const {
     isStrongPassword,
     emailNoExiste,
     numeroDeTelefonoExiste,
-    isCoDNI,
     typeDNI,
     existeDNI} = require("../helpers/db_validators");
-const validarJWT = require("./validar_jwt");
-
-
-
-
+    const validarJWT = require("./validar_jwt");
+    
+    
+    
+//* VALIDAR CAMPOS DE LAS RUTAS DE USER
 const insertUserChecks = [
     check('names', 'El nombre es obligatorio').notEmpty(),
     check('lastName', 'El apellido es obligatorio').notEmpty(),
@@ -22,33 +21,41 @@ const insertUserChecks = [
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
     check('phoneNumber').custom(numeroDeTelefonoExiste),
-    // check('DNI').custom(isCoDNI),
-    //check('names').custom(namesExiste) // VALIDACIÓN QUE SE GANÓ EL ODIO
+    // check('DNI').custom(isCoDNI),        // NO SE USA POR EL MOMENTO
+    //check('names').custom(namesExiste)    // VALIDACIÓN QUE SE GANÓ EL ODIO
 ]
-
 const getUserCkecks = [
-    // check('id', 'No es un id valido').isMongoId(),   DEPRECADAS DE MOMENTO
-    // check('user').custom(existeUsuarioPorId),        DEPRECADAS DE MOMENTO
     validarJWT,
     check('email', 'El correo no es un correo válido').isEmail(),
     check('email').custom(emailNoExiste),
     check('password', 'La contraseña es obligatoria').notEmpty(),
+    // check('id', 'No es un id valido').isMongoId(),   DEPRECADAS DE MOMENTO
+    // check('user').custom(existeUsuarioPorId),        DEPRECADAS DE MOMENTO
 ]
-
 const loginAuthChecks = [
     check('password', 'La contraseña es obligatoria').notEmpty(),
     check('email', 'El correo no es un correo válido').isEmail(),
     check('email').custom(emailNoExiste),
 
 ]
-
 const googleChecks = [
     check('id_token', 'El token es obligatorio').notEmpty(),
 ]
+
+//* VALIDAR CAMPOS DE LAS RUTAS DE CATEGORIAS
+const crearCategoriaChecks = [
+    validarJWT,
+    check('nombre', 'El nombre es obligatorio').notEmpty(),
+]
+
+
+
+
 
 module.exports = {
     insertUserChecks,
     getUserCkecks,
     loginAuthChecks,
-    googleChecks
+    googleChecks,
+    crearCategoriaChecks
 }

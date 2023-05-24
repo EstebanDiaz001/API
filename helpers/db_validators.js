@@ -1,4 +1,3 @@
-const { request, response } = require("express");
 const Rol = require("../database/schemas/rolSchema");
 const User = require("../database/schemas/userSchema");
 const validator = require('validator');
@@ -10,7 +9,7 @@ const validator = require('validator');
 const esRolValido = async (rol) => {
 
     const existeRol = await Rol.findOne({ rol })
-    if (!existeRol) throw new Error(`El Rol ${rol} no está registrado en la base de datos`)
+    if (!existeRol) throw new Error(`El Rol ${rol} no es un rol válido`)
 }
 const emailExiste = async (email) => {
 
