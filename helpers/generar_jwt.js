@@ -7,7 +7,7 @@ const generarJWT = ( _id = '') =>{
         const playload = { _id };
 
         jwt.sign( playload, process.env.SECRETORPUBLICKEY, {
-            expiresIn:'24h'
+            expiresIn:'4h'
         }, (err, token) =>{
             if (err) {
                 console.log(err);

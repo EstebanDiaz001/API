@@ -11,9 +11,9 @@ const loginAuth = async (req = request, res = response) => {
 
     const {password, email } = req.body
 
-    const user = await User.findOne({email})
-
     try {
+        const user = await User.findOne({email})
+    
         const equal = bcrypt.compareSync(password, user.password)
         if (!equal) return res.status(400).json({msg:'La contraseña es incorrecta', success:false})
         const token = await generarJWT(user.id)
@@ -30,10 +30,9 @@ const googleSigin = async (req = request, res = response) =>{
     
     const {id_token} = req.body;
     try {
-        console.log(id_token);
+        console.log({id_token});
         
         const {names, lastName, img, email} = await googleVerify(id_token);
-        console.log(await googleVerify(id_token));
         let usuario = await User.findOne({email})
         if (!usuario) {
             const data = {
@@ -41,19 +40,20 @@ const googleSigin = async (req = request, res = response) =>{
                 lastName,
                 email, 
                 img, 
-                password:':P',
-                // phoneNumber:'',
-                // DNI:'',
-                // typeDNI:'',
+                password:'admin',
+                phoneNumber:'3000000000',
+                DNI:'1001000000',
+                typeDNI:'CC',
                 google:true
-
             };
             usuario = new User(data);
-            console.log(usuario);
-            // await usuario.save();
+            // console.log(usuario);
+            await usuario.save();
         }
 
         const token = await generarJWT(usuario.id)
+        
+        console.table(usuario);
         
         return res.json({
             usuario,

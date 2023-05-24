@@ -29,9 +29,6 @@ class Server {
         this.app.get("/", (req, res) => {
             res.json({ message: `Raiz de la API con puerto: ${this.port}` })
         });
-        this.app.get('/google', (req, res) => {
-            res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
-          })
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, '..', 'public', '404.html'))
           })

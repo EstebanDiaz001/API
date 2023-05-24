@@ -1,14 +1,14 @@
 const express = require("express");
+const router = express.Router();
 const { 
     insertUser,
-    updateUser} = require("../../controllers/user.controller");
+    getUser} = require("../../controllers/user.controller");
 const {
     insertUserChecks,
-    updateUserCkecks} = require("../../middlewares/validar-campos");
+    getUserCkecks} = require("../../middlewares/validar-campos");
 
 
 const validarChecks = require("../../middlewares/validar-checks");
-const router = express.Router();
 
 
 
@@ -17,6 +17,6 @@ const router = express.Router();
 router.post('/userRegister', [insertUserChecks,validarChecks] ,insertUser);
 
 // ACUALIZAR USUARIO
-router.put('/userUpdate', [updateUserCkecks,validarChecks],updateUser);
+router.put('/userGet', [getUserCkecks,validarChecks],getUser);
 
 module.exports = router;

@@ -41,15 +41,32 @@ const insertUser = async (req = request, res = response) => {
   }
 };
 
-const updateUser = async (req = request, res = response) => {
+const getUser = async (req = request, res = response) => {
 
   const usuarioAutenticado = req.body.user
-  const { email, password, newPassword, newPasswordConfirm } = req.body;
+  const { email, password} = req.body;
+  
+  try {
+    const user = await User.findOne({email})
+    
+    const equal = bcrypt.compareSync(password, user.password)
+
+    if (!equal) return res.status(400).json({msg:'La contraseña es incorrecta'})
+
+
+
+
+
+    return res.status(400).json({ user });
+    
+  } catch (error) {
+    console.log(error);
+      res.status(500).json({msg:'Algo salió mal'})
+  }
 
 
 
   
-  return res.status(400).json({ usuarioAutenticado });
 
   /* AQUI VA EL RESTO DEL CODIGO
 // const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
@@ -72,5 +89,5 @@ const updateUser = async (req = request, res = response) => {
 
 module.exports = {
   insertUser,
-  updateUser
+  getUser
 }
