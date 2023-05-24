@@ -32,6 +32,9 @@ class Server {
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, '..', 'public', '404.html'))
           })
+        this.app.get('/google', (req, res) => {
+            res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
+          })
 
 
         // RUTAS A USAR
