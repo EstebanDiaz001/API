@@ -50,14 +50,16 @@ const getUser = async (req = request, res = response) => {
     const user = await User.findOne({email})
     
     const equal = bcrypt.compareSync(password, user.password)
+    const equalUser = usuarioAutenticado.email == email
 
     if (!equal) return res.status(400).json({msg:'La contraseña es incorrecta'})
+    if (!equalUser) return res.status(400).json({msg:'El token no coincide con el correo ingresado'})
 
 
 
 
 
-    return res.status(400).json({ user });
+    return res.status(200).json({ user, equal });
     
   } catch (error) {
     console.log(error);

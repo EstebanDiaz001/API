@@ -17,6 +17,6 @@ const validarChecks = require("../../middlewares/validar-checks");
 router.post('/userRegister', [insertUserChecks,validarChecks] ,insertUser);
 
 // ACUALIZAR USUARIO
-router.put('/userGet', [getUserCkecks,validarChecks],getUser);
+router.get('/userGet', [getUserCkecks,validarChecks],getUser);
 
 module.exports = router;
