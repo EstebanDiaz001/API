@@ -18,6 +18,7 @@ const insertUserChecks = [
     check('email', 'El correo no es un correo válido').isEmail(),
     check('phoneNumber', "El numero no es de colombia").isMobilePhone('es-CO'),
     check('typeDNI').custom(typeDNI),
+    check('DNI', 'Solo se aceptan Strings').isString(),
     check('DNI').custom(existeDNI),
     check('password').custom(isStrongPassword),
     check('email').custom(emailExiste),
