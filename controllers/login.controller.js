@@ -19,7 +19,12 @@ const loginAuth = async (req = request, res = response) => {
         const token = await generarJWT(user.id)
         console.log('asd');
         
-        res.status(200).json({success:true, user, token})
+        res.status(200).json({
+            success:true,
+            msg:'Te has logueado correctamente',
+            user,
+            token
+        })
     } catch (error) {
         res.status(500).json({error:'Algo salió mal'})
     }
@@ -32,6 +37,7 @@ const googleSigin = async (req = request, res = response) =>{
     try {
         
         const {names, lastName, img, email} = await googleVerify(id_token);
+        console.log({id_token});
         let usuario = await User.findOneAndUpdate({email}, {google:true})
         if (!usuario) {
             const data = {
@@ -55,6 +61,7 @@ const googleSigin = async (req = request, res = response) =>{
         
         return res.json({
             usuario,
+            msg:'Te has logueado correctamente',
             token
         })
 
