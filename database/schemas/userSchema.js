@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const {Schema, model} = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   names: {
     type: String,
     required: [true, 'El nombre es obligatorio'],
@@ -77,6 +77,6 @@ userSchema.methods.toJSON = function(){
  
 
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

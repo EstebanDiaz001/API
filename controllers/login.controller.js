@@ -30,10 +30,9 @@ const googleSigin = async (req = request, res = response) =>{
     
     const {id_token} = req.body;
     try {
-        console.log({id_token});
         
         const {names, lastName, img, email} = await googleVerify(id_token);
-        let usuario = await User.findOne({email})
+        let usuario = await User.findOneAndUpdate({email}, {google:true})
         if (!usuario) {
             const data = {
                 names,
@@ -47,13 +46,12 @@ const googleSigin = async (req = request, res = response) =>{
                 google:true
             };
             usuario = new User(data);
-            // console.log(usuario);
+            
             await usuario.save();
         }
 
         const token = await generarJWT(usuario.id)
-        
-        console.table(usuario);
+        usuario = await User.findOne({email})
         
         return res.json({
             usuario,
@@ -65,7 +63,7 @@ const googleSigin = async (req = request, res = response) =>{
         console.log("error", error);
         return res.status(400).json({
             success:false,
-            error,
+            msg:`Token invalido`,
         })
     }
   
