@@ -65,6 +65,7 @@ const googleSigin = async (req = request, res = response) =>{
         usuario = await User.findOne({email})
         
         return res.json({
+            success:true,
             usuario,
             msg:'Te has logueado correctamente',
             token
