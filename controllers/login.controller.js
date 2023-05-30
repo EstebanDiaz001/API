@@ -4,6 +4,7 @@ const { response, request, json } = require("express");
 const generarJWT = require("../helpers/generar_jwt");
 const User = require("../database/schemas/userSchema");
 const { googleVerify } = require("../helpers/google-verify");
+const { googleInsert } = require("../helpers/google-insert");
 
 
 // AUTENTICACIÓN DE LAS CREDENCIALES
@@ -33,10 +34,14 @@ const loginAuth = async (req = request, res = response) => {
 
 const googleSigin = async (req = request, res = response) =>{
     
-    const {id_token} = req.body;
     try {
+        const {id_token, newUser, data} = req.body;
+        const userGoogle = await googleVerify(id_token);
+        const {names, lastName, img, email} = userGoogle;
+
+        if (newUser!=null && newUser === true) return googleInsert(userGoogle, data, res);
         
-        const {names, lastName, img, email} = await googleVerify(id_token);
+
         console.log({id_token});
         let usuario = await User.findOneAndUpdate({email}, {google:true})
         if (!usuario) {
