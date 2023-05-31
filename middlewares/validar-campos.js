@@ -27,13 +27,28 @@ const insertUserChecks = [
     //check('names').custom(namesExiste) // VALIDACIÓN QUE SE GANÓ EL ODIO
 ]
 
-const getUserCkecks = [
+const getUserChecks = [
     // check('id', 'No es un id valido').isMongoId(),   DEPRECADAS DE MOMENTO
     // check('user').custom(existeUsuarioPorId),        DEPRECADAS DE MOMENTO
     validarJWT,
     check('email', 'El correo no es un correo válido').isEmail(),
     check('email').custom(emailNoExiste),
     check('password', 'La contraseña es obligatoria').notEmpty(),
+]
+
+const updateUserChecks = [
+
+    check('names','El campo es requerido').notEmpty(),
+    check('lastName','El campo es requerido').notEmpty(),
+    check('email','El campo es requerido').notEmpty(),
+    check('oldPassword','El campo es requerido').notEmpty(),
+    check('newPassword','El campo es requerido').notEmpty(),
+    check('confirmNewPassword','El campo es requerido').notEmpty(),
+    check('phoneNumber','El campo es requerido').notEmpty(),
+    check('typeDNI','El campo es requerido').notEmpty(),
+    check('DNI','El campo es requerido').notEmpty(),
+
+
 ]
 
 const loginAuthChecks = [
@@ -49,7 +64,8 @@ const googleChecks = [
 
 module.exports = {
     insertUserChecks,
-    getUserCkecks,
+    getUserChecks,
     loginAuthChecks,
-    googleChecks
+    googleChecks,
+    updateUserChecks
 }

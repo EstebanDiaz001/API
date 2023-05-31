@@ -65,8 +65,13 @@ const getUser = async (req = request, res = response) => {
     console.log(error);
       res.status(500).json({msg:'Algo salió mal'})
   }
+}
 
-
+const updateUser = async (req = request, res = response)=>{
+  res.json({
+    msg:'Información actualizada corrextamente',
+    success:true});
+}
 
   
 
@@ -85,11 +90,11 @@ const getUser = async (req = request, res = response) => {
 
   
 
-}
 
 
 
 module.exports = {
   insertUser,
-  getUser
+  getUser,
+  updateUser
 }
