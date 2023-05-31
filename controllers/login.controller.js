@@ -16,7 +16,7 @@ const loginAuth = async (req = request, res = response) => {
         const user = await User.findOne({email})
     
         const equal = bcrypt.compareSync(password, user.password)
-        if (!equal) return res.status(400).json({msg:'La contraseña es incorrecta', success:false})
+        if (!equal) return res.status(400).json({message:'La contraseña es incorrecta', success:false})
         const token = await generarJWT(user.id)
         console.log('asd');
         
