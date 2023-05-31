@@ -5,7 +5,7 @@ const User = require('../database/schemas/userSchema');
 
 const validarJWT = async (req = request, res = response, next)=>{
 
-    const token = req.header('x-token')
+    const token = req.header('xtoken')
 
     if (!token) {
         return res.status(400).json({msg:'Falta el token en la petición'})
