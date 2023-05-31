@@ -12,70 +12,96 @@ const insertUser = async (req = request, res = response) => {
   const { names, lastName, secondLastName, typeDNI, DNI, email, password, confirmPassword, phoneNumber } = req.body;
 
   const checkDNI = validarDNI(typeDNI, DNI)
-  if (!checkDNI) return res.status(400).json({ errors:[{
-    value:DNI,
-    msg:`El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
-    path:'DNI'
-  }] })
+  if (!checkDNI) return res.status(400).json({
+    errors: [{
+      value: DNI,
+      msg: `El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
+      path: 'DNI'
+    }]
+  })
 
-  
+
   if (password !== confirmPassword) {
     console.log("Las contraseñas no coinciden");
-    return res.status(400).json({errors : [{
-      value:'password',
-      msg:`Las contraseñas no coinciden`,
-      path:'password'
-    }]});
+    return res.status(400).json({
+      errors: [{
+        value: 'password',
+        msg: `Las contraseñas no coinciden`,
+        path: 'password'
+      }]
+    });
   }
-  
+
   try {
-    
+
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const newUser = new User({ names, lastName, secondLastName, typeDNI, DNI, phoneNumber, email, password: hashedPassword,  });
+    const newUser = new User({ names, lastName, secondLastName, typeDNI, DNI, phoneNumber, email, password: hashedPassword, });
     await newUser.save();
     return res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser, success: true });
   } catch (error) {
     return res.status(400).json({ message: 'Error al crear el usuario', error, success: false });
-    
+
   }
 };
 
 const getUser = async (req = request, res = response) => {
 
   const usuarioAutenticado = req.body.user
-  const { email, password} = req.body;
-  
+  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({email})
-    
+    const user = await User.findOne({ email })
+
     const equal = bcrypt.compareSync(password, user.password)
     const equalUser = usuarioAutenticado.email == email
 
-    if (!equal) return res.status(400).json({msg:'La contraseña es incorrecta'})
-    if (!equalUser) return res.status(400).json({msg:'El token no coincide con el correo ingresado'})
+    if (!equal) return res.status(400).json({ msg: 'La contraseña es incorrecta' })
+    if (!equalUser) return res.status(400).json({ msg: 'El token no coincide con el correo ingresado' })
 
 
 
 
 
-    return res.status(200).json({ user, equal });
-    
+    return res.status(200).json({ user, success: equal });
+
   } catch (error) {
     console.log(error);
-      res.status(500).json({msg:'Algo salió mal'})
+    res.status(500).json({ msg: 'Algo salió mal' })
   }
 }
 
-const updateUser = async (req = request, res = response)=>{
-  res.json({
-    msg:'Información actualizada corrextamente',
-    success:true});
-}
+const updateUser = async (req = request, res = response) => {
+  
+  const { names, lastName, secondLastName, typeDNI, DNI, email, password, confirmPassword, phoneNumber } = req.body;
+  console.log({body:req.body});
+  const usuarioAutenticado = req.body.user
 
   
+  // const equal = bcrypt.compareSync(req.body.oldPassword, usuarioAutenticado.password)
+  // if (!equal) return res.status(400).json({ msg: 'La contraseña actual es incorrecta', success: false })
 
-  /* AQUI VA EL RESTO DEL CODIGO
+  // const checkDNI = validarDNI(typeDNI, DNI)
+  // if (!checkDNI) return res.status(400).json({
+  //   errors: [{
+  //     value: DNI,
+  //     msg: `El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
+  //     path: 'DNI'
+  //   }]
+  // })
+  
+
+
+
+  res.json({
+    msg: 'Información actualizada corrextamente',
+    success: true
+  });
+}
+
+
+
+/* AQUI VA EL RESTO DEL CODIGO
 // const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
 
 
@@ -88,7 +114,7 @@ const updateUser = async (req = request, res = response)=>{
 // const passwordConcordance = bcrypt.compareSync(password, user.password);
 */
 
-  
+
 
 
 
