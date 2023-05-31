@@ -39,15 +39,18 @@ const getUserChecks = [
 const updateUserChecks = [
 
     validarJWT,
-    check('names','El campo es requerido').notEmpty(),
-    check('lastName','El campo es requerido').notEmpty(),
-    check('email','El campo es requerido').notEmpty(),
-    check('oldPassword','El campo es requerido').notEmpty(),
-    check('newPassword','El campo es requerido').notEmpty(),
-    check('confirmNewPassword','El campo es requerido').notEmpty(),
-    check('phoneNumber','El campo es requerido').notEmpty(),
-    check('typeDNI','El campo es requerido').notEmpty(),
-    check('DNI','El campo es requerido').notEmpty(),
+    check('names','El campo names es requerido').notEmpty(),
+    check('lastName','El campo lastName es requerido').notEmpty(),
+    check('email','El campo email es requerido').notEmpty(),
+    check('email', 'El correo no es un correo válido').isEmail(),
+    check('oldPassword','El campo oldPassword es requerido').notEmpty(),
+    check('newPassword','El campo newPassword es requerido').notEmpty(),
+    check('confirmNewPassword','El campo confirmNewPassword es requerido').notEmpty(),
+    check('phoneNumber','El campo phoneNumber es requerido').notEmpty(),
+    check('typeDNI','El campo typeDNI es requerido').notEmpty(),
+    check('typeDNI').custom(typeDNI),
+    check('DNI','El campo DNI es requerido').notEmpty(),
+    check('DNI', 'Solo se aceptan Strings').isString(),
 
 
 ]

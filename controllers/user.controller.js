@@ -73,30 +73,64 @@ const getUser = async (req = request, res = response) => {
 
 const updateUser = async (req = request, res = response) => {
   
-  const { names, lastName, secondLastName, typeDNI, DNI, email, password, confirmPassword, phoneNumber } = req.body;
-  console.log({body:req.body});
+  const { names, lastName, secondLastName, typeDNI, DNI, email, oldPassword, newPassword, confirmNewPassword, phoneNumber } = req.body;
+  const hashedPassword = bcrypt.hashSync(oldPassword, 10);
   const usuarioAutenticado = req.body.user
 
   
-  // const equal = bcrypt.compareSync(req.body.oldPassword, usuarioAutenticado.password)
-  // if (!equal) return res.status(400).json({ msg: 'La contraseña actual es incorrecta', success: false })
+  const equal = bcrypt.compareSync(req.body.oldPassword, usuarioAutenticado.password)
+  if (!equal) return res.status(400).json({
+    value:"Password",
+    msg: 'La contraseña actual es incorrecta',
+    success: false
+  })
 
-  // const checkDNI = validarDNI(typeDNI, DNI)
-  // if (!checkDNI) return res.status(400).json({
-  //   errors: [{
-  //     value: DNI,
-  //     msg: `El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
-  //     path: 'DNI'
-  //   }]
-  // })
+  const checkDNI = validarDNI(typeDNI, DNI)
+  if (!checkDNI) return res.status(400).json({
+    errors: [{
+      value: DNI,
+      msg: `El DNI ${DNI} no coincide con el formato para ${typeDNI}`,
+      path: 'DNI'
+    }]
+  })
+
+  if (newPassword !== confirmNewPassword) {
+    console.log("Las contraseñas nuevas no coinciden");
+    return res.status(400).json({
+      errors: [{
+        value: 'password',
+        msg: `Las contraseñas no coinciden`,
+        path: 'password'
+      }]
+    });
+  }
   
+  try {
+    
+    const uptdate = await User.findOneAndUpdate({email:usuarioAutenticado.email},
+      {
+        names,
+        lastName,
+        secondLastName,
+        DNI,
+        email,
+        password:hashedPassword,
+        phoneNumber,
+        typeDNI,
+      })
+
+      console.log({uptdate});
+
+    return res.json({
+      msg: 'Información actualizada corrextamente',
+      success: true
+    });
+  } catch (error) {
+    
+  }
 
 
 
-  res.json({
-    msg: 'Información actualizada corrextamente',
-    success: true
-  });
 }
 
 
