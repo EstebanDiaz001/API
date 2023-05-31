@@ -38,6 +38,7 @@ const getUserChecks = [
 
 const updateUserChecks = [
 
+    validarJWT,
     check('names','El campo es requerido').notEmpty(),
     check('lastName','El campo es requerido').notEmpty(),
     check('email','El campo es requerido').notEmpty(),
